@@ -33,11 +33,29 @@ class ProyectoController extends Controller
         return redirect()->route('projects.index');
     }
 
+public function update(Request $request, string $id)
+{
+    $proyecto = Proyecto::findOrFail($id);
+
+    $proyecto->update([
+        'nombre' => $request->nombre,
+        'descripcion' => $request->descripcion
+    ]);
+
+    return redirect()->route('projects.index');
+}
+
+
     public function edit($id)
     {
-        $proyecto = Proyecto::find($id);
+        $proyecto = Proyecto::findOrFail($id);
 
         return view('projects.update',compact('proyecto'));
         
+    }
+    public function destroy($id){
+        $proyecto=Proyecto::findOrFail($id);
+        $proyecto->delete();
+        return redirect()->route('projects.index');
     }
 }
